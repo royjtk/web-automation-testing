@@ -39,13 +39,13 @@ Sebelum menginstal Cucumber, pastikan Anda memiliki komponen berikut:
 Cucumber dengan Java memerlukan JDK 8 atau yang lebih baru.
 
 1. Kunjungi situs web [Oracle JDK](https://www.oracle.com/java/technologies/javase-downloads.html) atau [OpenJDK](https://adoptopenjdk.net/)
-2. Unduh installer JDK terbaru untuk Windows (misalnya JDK 17)
+2. Unduh installer JDK terbaru untuk Windows (misalnya JDK 21)
 3. Jalankan installer dan ikuti instruksi
 4. Setelah instalasi selesai, atur variabel lingkungan:
    - Buka menu Start, cari "Edit environment variables for your account" dan buka
    - Pada tab "User variables", klik "New" dan tambahkan:
      - Nama variabel: `JAVA_HOME`
-     - Nilai variabel: lokasi instalasi JDK (misalnya `C:\Program Files\Java\jdk-17`)
+     - Nilai variabel: lokasi instalasi JDK (misalnya `C:\Program Files\Java\jdk-21`)
    - Cari variabel `Path` di "User variables", pilih dan klik "Edit"
    - Klik "New" dan tambahkan `%JAVA_HOME%\bin`
    - Klik "OK" untuk menyimpan perubahan
