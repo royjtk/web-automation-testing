@@ -1,3 +1,4 @@
+@dashboard
 Feature: Dashboard Navigation after Login
   As a logged in user with Bendahara role
   I want to verify the dashboard elements and navigation menu

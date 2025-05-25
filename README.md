@@ -61,26 +61,41 @@ Laporan HTML akan tersedia di:
 
 Jika terjadi error saat menjalankan test, coba solusi berikut:
 
-1. **Element tidak ditemukan**:
-   - Periksa dan sesuaikan locator di file Page Object
-   - Periksa apakah website target berubah struktur HTML-nya
+1. **Element tidak ditemukan (NoSuchElementException)**:
+   - Periksa dan sesuaikan locator di file Page Object (`LoginPage.java`, `DashboardPage.java`)
+   - Gunakan metode yang lebih fleksibel seperti `xpath` dengan multiple attribute matching
+   - Coba gunakan atribut yang lebih stabil seperti `name`, `id`, atau `class`
+   - Tambahkan waktu tunggu (wait) yang lebih lama pada element yang sulit ditemukan
 
 2. **Dependency Injection Error**:
-   - Pastikan dependency cucumber-picocontainer sudah ditambahkan di pom.xml
-   - Pastikan setiap class Step Definition memiliki constructor yang menerima SharedDrivers
+   - Pastikan dependency `cucumber-picocontainer` sudah ditambahkan di pom.xml
+   - Periksa constructor pada class Step Definition memiliki parameter `SharedDrivers`
+   - Hindari menciptakan WebDriver instance secara terpisah di setiap class Step Definition
 
 3. **Browser tidak terbuka**:
-   - Pastikan driver browser yang sesuai tersedia
-   - Jalankan dengan opsi `webdriver.chrome.driver` yang mengarah ke executable driver
+   - Periksa path ChromeDriver yang digunakan di `SharedDrivers.java`
+   - Pastikan versi ChromeDriver cocok dengan versi Chrome yang terinstal
+   - Gunakan WebDriverManager untuk mengelola driver secara otomatis
+   - Jalankan dengan flag `--no-sandbox` dan `--disable-dev-shm-usage` untuk mengatasi masalah di lingkungan tertentu
 
 4. **Timeout Error**:
-   - Tingkatkan nilai timeout pada WebDriverWait
-   - Periksa koneksi internet
+   - Tingkatkan nilai timeout pada `WebDriverWait` (misalnya dari 10 detik menjadi 30 detik)
+   - Gunakan `implicitlyWait` dan `pageLoadTimeout` yang lebih lama
+   - Periksa koneksi internet dan responsivitas situs target
+
+5. **Chrome DevTools Protocol Error (CDP)**:
+   - Update versi Selenium ke yang terbaru yang mendukung versi Chrome Anda
+   - Tambahkan dependency selenium-devtools yang sesuai dengan versi Chrome
+   - Nonaktifkan log warning dengan `Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF)`
+
+6. **Menjalankan Tes Spesifik**:
+   - Gunakan tag di feature files dan konfigurasikan di TestRunner: `@CucumberOptions(tags = "@login")`
+   - Jalankan file feature tertentu: `mvn test -Dcucumber.options="src/test/resources/features/login.feature"`
 
 ## Dependencies
 
 - Java 21
-- Cucumber 7.15.0
-- Selenium WebDriver 4.18.1
+- Cucumber 7.22.2
+- Selenium WebDriver 4.32.0
 - WebDriverManager 5.6.2
 - JUnit 4.13.2

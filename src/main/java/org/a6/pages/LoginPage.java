@@ -13,19 +13,17 @@ import java.time.Duration;
 public class LoginPage {
     private WebDriver driver;
     private final String LOGIN_URL = "http://ptbsp.ddns.net:6882/login";
-    private WebDriverWait wait;    @FindBy(id = "username")
+    private WebDriverWait wait;    @FindBy(name = "username")
     private WebElement usernameField;
 
-    @FindBy(id = "password")
+    @FindBy(name = "password")
     private WebElement passwordField;
 
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement loginButton;
-
-    @FindBy(xpath = "//div[contains(@class, 'error-message')]")
+    @FindBy(xpath = "//button[@type='submit' and contains(., 'Login')]")
+    private WebElement loginButton;    @FindBy(xpath = "//div[contains(@class, 'error-message') or contains(text(), 'wajib') or contains(text(), 'salah') or contains(text(), 'gagal')]")
     private WebElement errorMessage;
 
-    @FindBy(xpath = "//button[contains(@class, 'toggle-password')]")
+    @FindBy(xpath = "//button[contains(@class, 'toggle-password') or .//svg[contains(@class, 'lucide-eye')]]")
     private WebElement passwordToggleButton;
 
     public LoginPage(WebDriver driver) {
@@ -56,20 +54,63 @@ public class LoginPage {
                 System.out.println("Error finding username field: " + ex.getMessage());
             }
         }
-    }
-
-    public void enterUsername(String username) {
-        usernameField.clear();
-        usernameField.sendKeys(username);
+    }    public void enterUsername(String username) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(usernameField));
+            usernameField.clear();
+            usernameField.sendKeys(username);
+        } catch (Exception e) {
+            System.out.println("Warning: Username field not found with standard locator. Trying alternatives.");
+            
+            // Metode alternatif - cari input field berdasarkan berbagai atribut
+            try {
+                WebElement alternativeUsernameField = driver.findElement(
+                    By.xpath("//input[@name='username' or @id='username' or contains(@placeholder, 'Username') or contains(@placeholder, 'username')]"));
+                alternativeUsernameField.clear();
+                alternativeUsernameField.sendKeys(username);
+            } catch (Exception ex) {
+                System.out.println("Error entering username: " + ex.getMessage());
+                throw ex;
+            }
+        }
     }
 
     public void enterPassword(String password) {
-        passwordField.clear();
-        passwordField.sendKeys(password);
-    }
-
-    public void clickLoginButton() {
-        loginButton.click();
+        try {
+            wait.until(ExpectedConditions.visibilityOf(passwordField));
+            passwordField.clear();
+            passwordField.sendKeys(password);
+        } catch (Exception e) {
+            System.out.println("Warning: Password field not found with standard locator. Trying alternatives.");
+            
+            // Metode alternatif - cari password field berdasarkan berbagai atribut
+            try {
+                WebElement alternativePasswordField = driver.findElement(
+                    By.xpath("//input[@name='password' or @id='password' or @type='password' or contains(@placeholder, 'Password') or contains(@placeholder, 'password')]"));
+                alternativePasswordField.clear();
+                alternativePasswordField.sendKeys(password);
+            } catch (Exception ex) {
+                System.out.println("Error entering password: " + ex.getMessage());
+                throw ex;
+            }
+        }
+    }    public void clickLoginButton() {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(loginButton));
+            loginButton.click();
+        } catch (Exception e) {
+            System.out.println("Warning: Login button not found with standard locator. Trying alternatives.");
+            
+            // Metode alternatif - cari tombol login berdasarkan berbagai atribut
+            try {
+                WebElement alternativeLoginButton = driver.findElement(
+                    By.xpath("//button[@type='submit' or contains(text(), 'Login') or contains(text(), 'login') or contains(text(), 'Masuk') or contains(@class, 'login-button')]"));
+                alternativeLoginButton.click();
+            } catch (Exception ex) {
+                System.out.println("Error clicking login button: " + ex.getMessage());
+                throw ex;
+            }
+        }
     }
 
     public boolean isErrorMessageDisplayed() {

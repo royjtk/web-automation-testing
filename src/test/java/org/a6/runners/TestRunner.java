@@ -12,10 +12,12 @@ import org.junit.runner.RunWith;
         "pretty",
         "html:target/cucumber-reports/cucumber-pretty.html",
         "json:target/cucumber.json",
-        "junit:target/cucumber-reports/cucumber-results.xml"
+        "junit:target/cucumber-reports/cucumber-results.xml",
+        "rerun:target/failed_scenarios.txt"
     },
     monochrome = true,
-    dryRun = false
+    dryRun = false,
+    tags = "@login or @logout or @dashboard"
 )
 public class TestRunner {
     // The class body remains empty

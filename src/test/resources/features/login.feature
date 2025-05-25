@@ -1,3 +1,4 @@
+@login
 Feature: Login functionality
   As a user of the Pengelolaan Dana Pendidikan Sekolah Zaidan Educare application
   I want to be able to login to the application

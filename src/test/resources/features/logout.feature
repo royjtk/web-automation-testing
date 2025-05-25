@@ -1,3 +1,4 @@
+@logout
 Feature: Logout functionality
   As a logged in user of the Pengelolaan Dana Pendidikan Sekolah Zaidan Educare application
   I want to be able to logout from the application

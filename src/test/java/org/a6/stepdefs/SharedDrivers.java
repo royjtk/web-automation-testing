@@ -16,7 +16,8 @@ import java.util.logging.Logger;
  * using Cucumber's dependency injection with PicoContainer
  */
 public class SharedDrivers {
-    private WebDriver driver;    @Before
+    private WebDriver driver;
+    @Before
     public void setup() {
         if (driver == null) {
             // Menekan warning CDP
@@ -40,10 +41,9 @@ public class SharedDrivers {
             // Set implicit wait to improve element finding
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-        }
-    }
+        }    }
 
-    @After
+    @After(order = 10) // Lower priority (higher number) runs after screenshot is taken
     public void tearDown() {
         if (driver != null) {
             driver.quit();

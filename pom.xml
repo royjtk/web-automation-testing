@@ -12,8 +12,8 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <cucumber.version>7.15.0</cucumber.version>
-        <selenium.version>4.20.0</selenium.version>
+        <cucumber.version>7.22.2</cucumber.version>
+        <selenium.version>4.32.0</selenium.version>
     </properties>
 
     <dependencies>
@@ -47,12 +47,6 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
-        </dependency>
-        <!-- Selenium DevTools untuk Chrome 137 -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-devtools-v119</artifactId>
             <version>${selenium.version}</version>
         </dependency>
 
