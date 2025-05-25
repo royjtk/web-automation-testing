@@ -1,7 +1,10 @@
 package org.a6.stepdefs;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.a6.pages.DashboardPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
@@ -11,25 +14,34 @@ import java.util.Map;
 
 public class DashboardSteps {
     private WebDriver driver;
-    private DashboardPage dashboardPage;    // We'll use dependency injection from Cucumber's PicoContainer
+    private DashboardPage dashboardPage;
+
     public DashboardSteps(SharedDrivers sharedDrivers) {
         this.driver = sharedDrivers.getDriver();
         this.dashboardPage = new DashboardPage(driver);
     }
 
-    @Then("Username {string} should be visible in the header")
-    public void usernameShouldBeVisibleInTheHeader(String username) {
-        Assert.assertTrue("Username is not visible in header", dashboardPage.isUserNameDisplayed(username));
+    @When("I am on the dashboard page")
+    public void iAmOnTheDashboardPage() {
+        Assert.assertTrue("Dashboard page is not displayed", dashboardPage.isDashboardHeaderDisplayed());
     }
 
-    @Then("Navigation menu should display the following options")
-    public void navigationMenuShouldDisplayTheFollowingOptions(DataTable dataTable) {
-        List<Map<String, String>> menuItems = dataTable.asMaps(String.class, String.class);
-        
-        for (Map<String, String> menuItem : menuItems) {
-            String item = menuItem.get("menuItem");
-            Assert.assertTrue("Menu item '" + item + "' is not displayed", 
-                dashboardPage.isNavigationMenuItemDisplayed(item));
+    @Then("The dashboard header should be displayed")
+    public void theDashboardHeaderShouldBeDisplayed() {
+        Assert.assertTrue("Dashboard header is not displayed", dashboardPage.isDashboardHeaderDisplayed());
+    }
+
+    @And("The username {string} should be visible in the header")
+    public void usernameVisibleInHeader(String username) {
+        Assert.assertTrue("Username not visible in header", dashboardPage.isUserNameDisplayed(username));
+    }
+    
+    @Then("The navigation menu should display the following options:")
+    public void navigationMenuDisplaysOptions(DataTable dataTable) {
+        List<String> menuItems = dataTable.asList(String.class);
+        for (String menuItem : menuItems) {
+            Assert.assertTrue("Menu item '" + menuItem + "' is not displayed", 
+                dashboardPage.isNavigationMenuItemDisplayed(menuItem));
         }
     }
 }

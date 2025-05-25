@@ -9,12 +9,14 @@ Feature: Dashboard Navigation after Login
       | username  | password  |
       | bendahara | admin123  |
 
-  Scenario: Verify dashboard header with Bendahara credentials
-    Then Dashboard header should be displayed
-    And Username "bendahara" should be visible in the header
+  Scenario: TC-DASH-01 Verify dashboard header with Bendahara credentials
+    When I am on the dashboard page
+    Then The dashboard header should be displayed
+    And The username "bendahara" should be visible in the header
 
-  Scenario: Verify navigation menu items for Bendahara
-    Then Navigation menu should display the following options
+  Scenario: TC-DASH-02 Verify navigation menu items for Bendahara
+    When I am on the dashboard page
+    Then The navigation menu should display the following options:
       | menuItem            |
       | Dashboard           |
       | Tagihan Siswa       |

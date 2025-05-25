@@ -1,6 +1,5 @@
 package org.a6.stepdefs;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -8,9 +7,6 @@ import io.cucumber.java.en.When;
 import org.a6.pages.DashboardPage;
 import org.a6.pages.LoginPage;
 import org.junit.Assert;
-
-import java.util.List;
-import java.util.Map;
 
 public class LogoutSteps {
     private SharedDrivers sharedDrivers;
@@ -23,63 +19,47 @@ public class LogoutSteps {
         this.loginPage = new LoginPage(sharedDrivers.getDriver());
     }
 
-    @Given("I am logged in with valid credentials")
-    public void iAmLoggedInWithValidCredentials(DataTable dataTable) {
-        List<Map<String, String>> credentials = dataTable.asMaps(String.class, String.class);
-        String username = credentials.get(0).get("username");
-        String password = credentials.get(0).get("password");
-        
+    @Given("I am logged in with username {string} and password {string}")
+    public void iAmLoggedInWithCredentials(String username, String password) {
         loginPage.navigateToLoginPage();
         loginPage.enterUsername(username);
         loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        
-        Assert.assertTrue("Login failed, dashboard not displayed", 
-            dashboardPage.isDashboardHeaderDisplayed());
+        Assert.assertTrue("Login failed", dashboardPage.isDashboardHeaderDisplayed());
     }
 
-    @Given("I am on the dashboard page")
-    public void iAmOnTheDashboardPage() {
-        Assert.assertTrue("Dashboard page is not displayed", 
-            dashboardPage.isDashboardHeaderDisplayed());
-    }
-
-    @When("I click on logout button in the header")
-    public void iClickOnLogoutButtonInTheHeader() {
+    @When("I click logout button in the header")
+    public void iClickLogoutButtonInTheHeader() {
         dashboardPage.clickLogoutButton();
     }
 
-    @Then("I should be successfully logged out")
-    public void iShouldBeSuccessfullyLoggedOut() {
-        Assert.assertTrue("Logout failed, user not redirected to login page", 
-            loginPage.isLoginPageDisplayed());
+    @Then("I should be logged out successfully")
+    public void iShouldBeLoggedOutSuccessfully() {
+        Assert.assertTrue("User is not logged out", loginPage.isLoginPageDisplayed());
     }
 
-    @And("Login form should be displayed")
-    public void loginFormShouldBeDisplayed() {
-        Assert.assertTrue("Login form is not displayed after logout", 
-            loginPage.isLoginPageDisplayed());
+    @And("I should be redirected to the login page")
+    public void iShouldBeRedirectedToTheLoginPage() {
+        Assert.assertTrue("Not redirected to login page", loginPage.isLoginPageDisplayed());
     }
 
-    @And("I click on browser back button after logout")
-    public void iClickOnBrowserBackButtonAfterLogout() {
+    @And("I click browser back button")
+    public void iClickBrowserBackButton() {
         sharedDrivers.getDriver().navigate().back();
     }
 
     @Then("I should not be able to access protected pages")
     public void iShouldNotBeAbleToAccessProtectedPages() {
-        Assert.assertFalse("User can still access protected pages after logout", 
-            dashboardPage.isDashboardHeaderDisplayed());
+        Assert.assertFalse("User can still access protected pages", dashboardPage.isDashboardHeaderDisplayed());
     }
 
-    @And("I try to access dashboard URL directly after logout")
-    public void iTryToAccessDashboardUrlDirectlyAfterLogout() {
+    @And("I try to access dashboard URL directly")
+    public void iTryToAccessDashboardUrlDirectly() {
         dashboardPage.navigateToDashboardDirectly();
     }
 
     @Then("I should not be able to access the dashboard")
     public void iShouldNotBeAbleToAccessTheDashboard() {
-        Assert.assertFalse("User can still access dashboard after logout", 
-            dashboardPage.isDashboardHeaderDisplayed());
+        Assert.assertFalse("User can still access dashboard", dashboardPage.isDashboardHeaderDisplayed());
     }
 }

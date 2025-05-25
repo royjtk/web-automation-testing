@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
         "html:target/cucumber-reports/cucumber-pretty.html",
         "json:target/cucumber.json",
         "junit:target/cucumber-reports/cucumber-results.xml",
+        // "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm" // Plugin Allure
         "rerun:target/failed_scenarios.txt"
     },
     monochrome = true,

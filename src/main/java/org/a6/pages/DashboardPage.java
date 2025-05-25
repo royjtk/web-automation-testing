@@ -14,10 +14,13 @@ import java.util.List;
 public class DashboardPage {
     private WebDriver driver;
     private WebDriverWait wait;
-    private final String DASHBOARD_URL = "http://ptbsp.ddns.net:6882/";    @FindBy(xpath = "//div[contains(@class, 'bg-[#F2F3F4]') and contains(@class, 'sticky')]")
+    private final String DASHBOARD_URL = "http://ptbsp.ddns.net:6882/";    @FindBy(xpath = "//div[contains(@class, 'bg-[#F2F3F4]') or contains(@class, 'header') or contains(@class, 'navbar') or contains(@class, 'nav')]")
     private WebElement header;
 
-    @FindBy(xpath = "//span[text()='Bendahara' or contains(text(), 'bendahara')]")
+    @FindBy(xpath = "//h1[contains(text(), 'Dasbor') or contains(text(), 'Dashboard') or contains(text(), 'Beranda')] | //div[contains(@class, 'dashboard-title') or contains(@class, 'page-title')]")
+    private WebElement dashboardHeader;
+
+    @FindBy(xpath = "//span[contains(text(), 'Bendahara') or contains(text(), 'bendahara')] | //div[contains(@class, 'user-role') and contains(text(), 'Bendahara')]")
     private WebElement userNameDisplay;
 
     @FindBy(xpath = "//button[.//svg[contains(@class, 'lucide-log-out')]]")
@@ -46,8 +49,6 @@ public class DashboardPage {
       @FindBy(xpath = "//nav//a")
     private List<WebElement> navigationMenuItems;
     
-    @FindBy(xpath = "//h1[contains(text(), 'Dasbor') or contains(text(), 'Dashboard')]")
-    private WebElement dashboardHeader;
 
     public DashboardPage(WebDriver driver) {
         this.driver = driver;
