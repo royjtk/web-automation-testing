@@ -1,12 +1,8 @@
 package org.a6.stepdefs;
 
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.a6.pages.DashboardPage;
-import org.a6.pages.LoginPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
@@ -15,14 +11,10 @@ import java.util.Map;
 
 public class DashboardSteps {
     private WebDriver driver;
-    private DashboardPage dashboardPage;
-    private LoginPage loginPage;
-
-    // We'll use dependency injection from Cucumber's PicoContainer
+    private DashboardPage dashboardPage;    // We'll use dependency injection from Cucumber's PicoContainer
     public DashboardSteps(SharedDrivers sharedDrivers) {
         this.driver = sharedDrivers.getDriver();
         this.dashboardPage = new DashboardPage(driver);
-        this.loginPage = new LoginPage(driver);
     }
 
     @Then("Username {string} should be visible in the header")
