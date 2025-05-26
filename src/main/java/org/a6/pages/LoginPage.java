@@ -12,7 +12,7 @@ import java.time.Duration;
 
 public class LoginPage {
     private WebDriver driver;
-    private final String LOGIN_URL = "http://ptbsp.ddns.net:6882/login";
+    private final String LOGIN_URL = "http://ptbsp.ddns.net:6882";
     private WebDriverWait wait;    @FindBy(name = "username")
     private WebElement usernameField;
 
@@ -31,6 +31,7 @@ public class LoginPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }    public void navigateToLoginPage() {
+        System.out.println("Navigating to login page: " + LOGIN_URL);
         driver.get(LOGIN_URL);
         try {
             // Wait with increased timeout for slow page loads

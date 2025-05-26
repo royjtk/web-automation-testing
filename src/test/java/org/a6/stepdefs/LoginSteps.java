@@ -6,7 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.a6.pages.DashboardPage;
 import org.a6.pages.LoginPage;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 
 public class LoginSteps {
@@ -18,14 +18,29 @@ public class LoginSteps {
         this.driver = sharedDrivers.getDriver();
         this.loginPage = new LoginPage(driver);
         this.dashboardPage = new DashboardPage(driver);
+    }    @Given("User has opened the browser")
+    public void userHasOpenedTheBrowser() {
+        // Browser sudah dibuka oleh SharedDrivers class melalui setup method
     }
-
+    
+    @Given("User has navigated on the login page Education Fund Payment Management System for Zaidan Educare School app")
+    public void userHasNavigatedToLoginPage() {
+        loginPage.navigateToLoginPage();
+    }
+    
     @Given("I am on the login page")
     public void iAmOnTheLoginPage() {
+        // For backward compatibility with other tests
         loginPage.navigateToLoginPage();
     }
 
-    @When("I enter username {string}")
+    @When("User enters username {string} and password {string}")
+    public void iEnterUsernameAndPassword(String username, String password) {
+        loginPage.enterUsername(username);
+        loginPage.enterPassword(password);
+    }
+    
+    @And("I enter username {string}")
     public void iEnterUsername(String username) {
         loginPage.enterUsername(username);
     }
@@ -35,11 +50,18 @@ public class LoginSteps {
         loginPage.enterPassword(password);
     }
 
-    @And("I click login button")
-    public void iClickLoginButton() {
+    @And("User clicks login button")
+    public void userClicksLoginButton() {
         loginPage.clickLoginButton();
     }
-
+    
+    @And("User is navigated to the dashboard page")
+    public void userIsNavigatedToDashboardPage() {
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertTrue(currentUrl.contains("/dashboard") || currentUrl.contains("/dasbor"), 
+            "URL does not contain dashboard path");
+    }
+    
     @When("I leave username field empty")
     public void iLeaveUsernameFieldEmpty() {
         loginPage.enterUsername("");
@@ -48,50 +70,38 @@ public class LoginSteps {
     @And("I leave password field empty")
     public void iLeavePasswordFieldEmpty() {
         loginPage.enterPassword("");
-    }
-
-    @Then("I should be logged in successfully")
+    }    @Then("I should be logged in successfully")
     public void iShouldBeLoggedInSuccessfully() {
-        Assert.assertTrue("Dashboard is not displayed after login", dashboardPage.isDashboardHeaderDisplayed());
-    }
-
-    @And("I should be redirected to the dashboard page")
-    public void iShouldBeRedirectedToDashboardPage() {
-        Assert.assertTrue("User is not redirected to dashboard page", 
-            !driver.getCurrentUrl().contains("/login"));
+        Assertions.assertTrue(dashboardPage.isDashboardHeaderDisplayed(), "Dashboard is not displayed after login");
     }
 
     @Then("I should remain on the login page")
     public void iShouldRemainOnTheLoginPage() {
-        Assert.assertTrue("User is not on login page", loginPage.isLoginPageDisplayed());
-    }
-
-    @And("I should see error message {string} below username field")
+        Assertions.assertTrue(loginPage.isLoginPageDisplayed(), "User is not on login page");
+    }    @And("I should see error message {string} below username field")
     public void iShouldSeeErrorMessageBelowUsernameField(String errorMessage) {
-        Assert.assertTrue("Error message is not displayed", loginPage.isErrorMessageDisplayed());
-        Assert.assertEquals("Incorrect error message", errorMessage, loginPage.getErrorMessageText());
+        Assertions.assertTrue(loginPage.isErrorMessageDisplayed(), "Error message is not displayed");
+        Assertions.assertEquals(errorMessage, loginPage.getErrorMessageText(), "Incorrect error message");
     }
 
     @And("I should see error message {string} below password field")
     public void iShouldSeeErrorMessageBelowPasswordField(String errorMessage) {
-        Assert.assertTrue("Error message is not displayed", loginPage.isErrorMessageDisplayed());
-        Assert.assertEquals("Incorrect error message", errorMessage, loginPage.getErrorMessageText());
+        Assertions.assertTrue(loginPage.isErrorMessageDisplayed(), "Error message is not displayed");
+        Assertions.assertEquals(errorMessage, loginPage.getErrorMessageText(), "Incorrect error message");
     }
 
     @And("I should see error message {string}")
     public void iShouldSeeErrorMessage(String errorMessage) {
-        Assert.assertTrue("Error message is not displayed", loginPage.isErrorMessageDisplayed());
-        Assert.assertEquals("Incorrect error message", errorMessage, loginPage.getErrorMessageText());
-    }
-
-    @And("I click password visibility toggle")
+        Assertions.assertTrue(loginPage.isErrorMessageDisplayed(), "Error message is not displayed");
+        Assertions.assertEquals(errorMessage, loginPage.getErrorMessageText(), "Incorrect error message");
+    }    @And("I click password visibility toggle")
     public void iClickPasswordVisibilityToggle() {
         loginPage.clickPasswordVisibilityToggle();
     }
 
     @Then("Password field should be visible")
     public void passwordFieldShouldBeVisible() {
-        Assert.assertTrue("Password is not visible", loginPage.isPasswordVisible());
+        Assertions.assertTrue(loginPage.isPasswordVisible(), "Password is not visible");
     }
 
     @When("I click password visibility toggle again")
@@ -101,11 +111,11 @@ public class LoginSteps {
 
     @Then("Password field should be hidden")
     public void passwordFieldShouldBeHidden() {
-        Assert.assertFalse("Password is still visible", loginPage.isPasswordVisible());
+        Assertions.assertFalse(loginPage.isPasswordVisible(), "Password is still visible");
     }
 
     @And("Login form should be displayed")
     public void loginFormShouldBeDisplayed() {
-        Assert.assertTrue("Login form is not displayed", loginPage.isLoginPageDisplayed());
+        Assertions.assertTrue(loginPage.isLoginPageDisplayed(), "Login form is not displayed");
     }
 }

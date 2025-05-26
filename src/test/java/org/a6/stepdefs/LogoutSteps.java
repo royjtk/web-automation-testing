@@ -6,7 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.a6.pages.DashboardPage;
 import org.a6.pages.LoginPage;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 public class LogoutSteps {
     private SharedDrivers sharedDrivers;
@@ -20,37 +20,33 @@ public class LogoutSteps {
     }
 
     @Given("I am logged in with username {string} and password {string}")
-    public void iAmLoggedInWithCredentials(String username, String password) {
+    public void iAmLoggedInWithCredentials(String username, String password) {        
         loginPage.navigateToLoginPage();
         loginPage.enterUsername(username);
         loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        Assert.assertTrue("Login failed", dashboardPage.isDashboardHeaderDisplayed());
+        Assertions.assertTrue(dashboardPage.isDashboardHeaderDisplayed(), "Login failed");
     }
 
     @When("I click logout button in the header")
     public void iClickLogoutButtonInTheHeader() {
         dashboardPage.clickLogoutButton();
-    }
-
-    @Then("I should be logged out successfully")
+    }    @Then("I should be logged out successfully")
     public void iShouldBeLoggedOutSuccessfully() {
-        Assert.assertTrue("User is not logged out", loginPage.isLoginPageDisplayed());
+        Assertions.assertTrue(loginPage.isLoginPageDisplayed(), "User is not logged out");
     }
 
     @And("I should be redirected to the login page")
     public void iShouldBeRedirectedToTheLoginPage() {
-        Assert.assertTrue("Not redirected to login page", loginPage.isLoginPageDisplayed());
+        Assertions.assertTrue(loginPage.isLoginPageDisplayed(), "Not redirected to login page");
     }
 
     @And("I click browser back button")
     public void iClickBrowserBackButton() {
         sharedDrivers.getDriver().navigate().back();
-    }
-
-    @Then("I should not be able to access protected pages")
+    }    @Then("I should not be able to access protected pages")
     public void iShouldNotBeAbleToAccessProtectedPages() {
-        Assert.assertFalse("User can still access protected pages", dashboardPage.isDashboardHeaderDisplayed());
+        Assertions.assertFalse(dashboardPage.isDashboardHeaderDisplayed(), "User can still access protected pages");
     }
 
     @And("I try to access dashboard URL directly")
@@ -60,6 +56,6 @@ public class LogoutSteps {
 
     @Then("I should not be able to access the dashboard")
     public void iShouldNotBeAbleToAccessTheDashboard() {
-        Assert.assertFalse("User can still access dashboard", dashboardPage.isDashboardHeaderDisplayed());
+        Assertions.assertFalse(dashboardPage.isDashboardHeaderDisplayed(), "User can still access dashboard");
     }
 }

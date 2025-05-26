@@ -14,10 +14,9 @@ import java.util.List;
 public class DashboardPage {
     private WebDriver driver;
     private WebDriverWait wait;
-    private final String DASHBOARD_URL = "http://ptbsp.ddns.net:6882/";    @FindBy(xpath = "//div[contains(@class, 'bg-[#F2F3F4]') or contains(@class, 'header') or contains(@class, 'navbar') or contains(@class, 'nav')]")
-    private WebElement header;
-
-    @FindBy(xpath = "//h1[contains(text(), 'Dasbor') or contains(text(), 'Dashboard') or contains(text(), 'Beranda')] | //div[contains(@class, 'dashboard-title') or contains(@class, 'page-title')]")
+    private final String DASHBOARD_URL = "http://ptbsp.ddns.net:6882/";    
+    @FindBy(xpath = "//div[contains(@class, 'bg-[#F2F3F4]') or contains(@class, 'header') or contains(@class, 'navbar') or contains(@class, 'nav')]")
+    private WebElement header;    @FindBy(xpath = "//h1[contains(@class, 'font-secular') and (contains(text(), 'Dasbor - Bendahara') or contains(text(), 'Dasbor'))] | //div[contains(@class, 'dashboard-title')] | //h1[contains(text(), 'Dashboard') or contains(text(), 'Beranda')]")
     private WebElement dashboardHeader;
 
     @FindBy(xpath = "//span[contains(text(), 'Bendahara') or contains(text(), 'bendahara')] | //div[contains(@class, 'user-role') and contains(text(), 'Bendahara')]")
@@ -149,5 +148,43 @@ public class DashboardPage {
 
     public void navigateToDashboardDirectly() {
         driver.get(DASHBOARD_URL);
+    }
+    
+    /**
+     * Mendapatkan judul halaman dari browser
+     * @return Judul halaman
+     */
+    public String getPageTitle() {
+        return driver.getTitle();
+    }
+    
+    /**
+     * Mendapatkan teks dari header dashboard
+     * @return Teks header dashboard
+     */
+    public String getDashboardHeaderText() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(dashboardHeader));
+            return dashboardHeader.getText();
+        } catch (Exception e) {
+            System.out.println("Warning: Dashboard header not found with standard locator. Trying alternatives.");
+            
+            // Coba metode alternatif - cari header berdasarkan class font-secular
+            try {
+                WebElement alternativeHeader = driver.findElement(
+                    By.xpath("//h1[contains(@class, 'font-secular')]"));
+                return alternativeHeader.getText();
+            } catch (Exception ex) {
+                try {
+                    // Coba metode lain - cari header dengan text dasbor
+                    WebElement anyHeader = driver.findElement(
+                        By.xpath("//*[contains(text(), 'Dasbor') or contains(text(), 'Dashboard')]"));
+                    return anyHeader.getText();
+                } catch (Exception ex2) {
+                    // Jika tidak ada yang cocok, kembalikan string kosong
+                    return "";
+                }
+            }
+        }
     }
 }

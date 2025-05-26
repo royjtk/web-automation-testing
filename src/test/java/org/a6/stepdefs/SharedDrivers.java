@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,17 +24,14 @@ public class SharedDrivers {
     // Public constructor for dependency injection
     public SharedDrivers() {
         // Empty constructor for PicoContainer
-    }
-
-    @Before
+    }    @Before
     public void setup() {
         if (driver == null) {
             // Menekan warning CDP
             Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
 
-            // Opsi 2: Setup manual path ChromeDriver
-            System.setProperty("webdriver.chrome.driver", "C:\\WebDrivers\\chromedriver-win64\\chromedriver.exe");
-
+            // Menggunakan WebDriverManager untuk mengelola driver secara otomatis
+            io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();            
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");
 
@@ -42,6 +40,13 @@ public class SharedDrivers {
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-gpu");
             options.addArguments("--ignore-certificate-errors");
+            options.addArguments("disable-password-manager-reauthentication");
+            options.setExperimentalOption("prefs", Map.of(
+                "credentials_enable_service", false,
+                "profile.password_manager_enabled", false,
+                "profile.default_content_setting_values.notifications", 2,
+                "safebrowsing.enabled", false
+            ));
 
             driver = new ChromeDriver(options);
             driver.manage().window().maximize();
