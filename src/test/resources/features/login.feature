@@ -27,7 +27,7 @@ Feature: User Authentication
     When User enters username "indra" and password "admin123"
     And User clicks login button
     Then I should remain on the login page
-    And I should see error message "Incorrect username or password, please try again!"
+    And I should see error message "Username atau password salah"
 
   # Scenario: TC-LOGIN-02 Failed login with empty username
   #   When I leave username field empty
