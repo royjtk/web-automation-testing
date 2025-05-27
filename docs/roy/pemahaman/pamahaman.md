@@ -227,3 +227,107 @@ Tujuan kita pada tahap awal adalah mendapatkan tes yang gagal, di mana satu-satu
 Pada sistem yang ada, kita mungkin tidak perlu membuat begitu banyak kode baru untuk mencapai tujuan ini, tetapi kita mungkin perlu melakukan beberapa perubahan pada cara kita memanggil sistem. Ini memberi kita kesempatan untuk melakukan pemodelan domain ringan.
 
 Kita menggunakan skenario untuk memandu kita dalam implementasi kita. Pendekatan ini disebut pengembangan "outside-in", membantu kita memastikan bahwa ketika kita mengimplementasikan solusi, kita mengimplementasikannya berdasarkan kebutuhan nyata.
+
+## 9. Framework Testing di Java
+
+### JUnit 4
+JUnit 4 adalah framework testing yang sudah lama dan banyak digunakan di Java. Fitur utamanya:
+- Anotasi sederhana seperti `@Test`, `@Before`, `@After`
+- Assert methods untuk verifikasi (assertEquals, assertTrue, dll)
+- Tidak perlu extends TestCase seperti JUnit 3
+- Rule untuk mengubah behavior test
+- Categories untuk mengelompokkan test
+- Cara pakai:
+```java
+public class LoginTest {
+    @Before
+    public void setup() { }
+    
+    @Test
+    public void testLogin() { }
+    
+    @After
+    public void cleanup() { }
+}
+```
+
+### JUnit 5
+JUnit 5 (Jupiter) adalah versi terbaru dengan arsitektur modular dan fitur modern:
+- Nested tests dengan `@Nested`
+- Anotasi baru: `@BeforeAll`, `@AfterAll`, `@BeforeEach`, `@AfterEach`
+- Dynamic tests yang dibuat saat runtime
+- Parameter injection di constructor
+- Conditional test execution (`@EnabledIf`, `@DisabledIf`)
+- Interface fungsional untuk assertions
+- Cara pakai:
+```java
+@TestInstance(Lifecycle.PER_CLASS)
+class LoginTest {
+    @BeforeAll
+    void setup() { }
+    
+    @ParameterizedTest
+    @ValueSource(strings = {"user1", "user2"})
+    void testLoginWithDifferentUsers(String username) { }
+    
+    @AfterAll
+    void cleanup() { }
+}
+```
+
+### TestNG
+TestNG adalah framework alternatif yang lebih powerful untuk testing di Java:
+- Support untuk parallel testing
+- Flexible test configuration dengan XML
+- Powerful data provider untuk data-driven testing
+- Dependencies antar test methods
+- Test groups dan suites
+- Built-in reporting
+- Parameter dari XML configuration
+- Cara pakai:
+```java
+public class LoginTest {
+    @BeforeClass
+    public void setup() { }
+    
+    @Test(groups = {"smoke"})
+    @Parameters({"username", "password"})
+    public void testLogin(String username, String password) { }
+    
+    @AfterClass
+    public void cleanup() { }
+}
+```
+
+### Perbandingan Framework Testing
+
+| Fitur | JUnit 4 | JUnit 5 | TestNG |
+|-------|---------|---------|---------|
+| Arsitektur | Monolitik | Modular | Modular |
+| Parallel Testing | Terbatas | Support baik | Support sangat baik |
+| Data Provider | Manual | `@ParameterizedTest` | `@DataProvider` |
+| Dependencies | Tidak ada | Tidak ada | Support |
+| Groups/Tags | Categories | Tags | Groups |
+| Configuration | Anotasi | Anotasi | XML + Anotasi |
+| Parameter | Limited | Flexible | Sangat flexible |
+| Report | Basic | Basic | Advanced |
+| Learning Curve | Mudah | Medium | Medium-High |
+
+### Kapan Menggunakan Framework Apa?
+
+1. **Pilih JUnit 4 jika:**
+   - Project lama yang sudah pakai JUnit 4
+   - Butuh kompatibilitas dengan tools lama
+   - Tim baru belajar testing
+
+2. **Pilih JUnit 5 jika:**
+   - Project baru dengan Java 8+
+   - Butuh fitur modern tapi tetap simpel
+   - Sudah familiar dengan JUnit
+
+3. **Pilih TestNG jika:**
+   - Butuh parallel testing yang robust
+   - Project besar dengan test kompleks
+   - Perlu data-driven testing yang powerful
+   - Butuh reporting yang detail
+   - Perlu mengatur dependencies antar test
