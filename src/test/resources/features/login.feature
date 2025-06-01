@@ -23,6 +23,7 @@ Feature: User Authentication
       | Rekapitulasi                    |
       | Progres Transaksi Penerima Dana |
 
+  @negative
   Scenario: TC-1.2 Check login is un-successful with invalid credentials. Its is username not registered
     When User enters username "indra" and password "admin123"
     And User clicks login button
