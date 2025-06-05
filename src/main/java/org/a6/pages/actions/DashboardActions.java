@@ -94,28 +94,7 @@ public class DashboardActions {
         // Wait for the confirmation dialog to appear
         wait.until(ExpectedConditions.visibilityOf(elements.logoutConfirmationDialog));
       } catch (Exception ex) {
-        try {
-          // Try a more comprehensive approach with any element that might be a logout
-          WebElement anyLogoutElement = driver.findElement(
-              By.xpath(
-                  "//*[contains(text(), 'Logout') or contains(text(), 'Log Out') or contains(text(), 'Keluar') or contains(@title, 'Logout')]"));
-          wait.until(ExpectedConditions.elementToBeClickable(anyLogoutElement));
-          anyLogoutElement.click();
-
-          // Wait for the confirmation dialog to appear
-          try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath(
-                    "//div[@role='alertdialog'] | //div[contains(@class, 'modal')] | //div[contains(@class, 'dialog')]")));
-          } catch (Exception dialogException) {
-            System.out.println(
-                "Warning: No confirmation dialog appeared after clicking logout: " + dialogException.getMessage());
-          }
-        } catch (Exception ex2) {
-          System.out.println("Error: Failed to click logout button: " + ex2.getMessage());
-          // Last resort - try to navigate to the login page directly
-          driver.navigate().to("http://ptbsp.ddns.net:6882/login");
-        }
+        System.out.println("Error: Failed to click logout button: " + ex.getMessage());
       }
     }
   }
