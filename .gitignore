@@ -1,6 +1,12 @@
-allure-results
+# Ignore allure-results only at the root level
+/allure-results
+
+# Ignore target directory
 target/
+
+# But don't ignore target/allure-results directory
 !target/allure-results/
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
