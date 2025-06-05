@@ -8,7 +8,7 @@ Feature: User Authentication
     Given User has opened the browser
     And User has navigated on the login page Education Fund Payment Management System for Zaidan Educare School app
 
-  @positive
+  @Positive
   Scenario: TC-1.1 Check login is successful with valid credentials as role "bendahara"
     When User enters username "bendahara" and password "admin123"
     And User clicks login button
@@ -23,7 +23,7 @@ Feature: User Authentication
       | Rekapitulasi                    |
       | Progres Transaksi Penerima Dana |
 
-  @negative
+  @Negative
   Scenario: TC-1.2 Check login is un-successful with invalid credentials. Its is username not registered
     When User enters username "indra" and password "admin123"
     And User clicks login button

@@ -7,6 +7,7 @@ Feature: User Logout
   Background:
     Given I am logged in with username "bendahara" and password "admin123"
 
+  @Positive 
   Scenario: TC-LOGOUT-01 Successful logout with confirmation
     When I click logout button in the header
     Then I see a logout confirmation dialog
