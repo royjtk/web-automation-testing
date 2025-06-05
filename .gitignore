@@ -2,10 +2,11 @@
 /allure-results
 
 # Ignore target directory
-target/
+target/*
 
 # But don't ignore target/allure-results directory
 !target/allure-results/
+!target/allure-results/**
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
