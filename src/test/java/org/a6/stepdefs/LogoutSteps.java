@@ -26,12 +26,27 @@ public class LogoutSteps {
         loginActions.enterPassword(password);
         loginActions.clickLoginButton();
         Assertions.assertTrue(dashboardActions.isDashboardHeaderDisplayed(), "Login failed");
-    }
-
-    @When("I click logout button in the header")
+    }    @When("I click logout button in the header")
     public void iClickLogoutButtonInTheHeader() {
         dashboardActions.clickLogoutButton();
-    }    @Then("I should be logged out successfully")
+    }
+    
+    @And("I see a logout confirmation dialog")
+    public void iSeeLogoutConfirmationDialog() {
+        Assertions.assertTrue(dashboardActions.isLogoutConfirmationDisplayed(), "Logout confirmation dialog is not displayed");
+    }
+    
+    @And("I confirm the logout")
+    public void iConfirmTheLogout() {
+        dashboardActions.confirmLogout();
+    }
+    
+    @And("I cancel the logout")
+    public void iCancelTheLogout() {
+        dashboardActions.cancelLogout();
+    }
+    
+    @Then("I should be logged out successfully")
     public void iShouldBeLoggedOutSuccessfully() {
         Assertions.assertTrue(loginActions.isLoginPageDisplayed(), "User is not logged out");
     }    @And("I should be redirected to the login page")
@@ -51,5 +66,10 @@ public class LogoutSteps {
     }    @Then("I should not be able to access the dashboard")
     public void iShouldNotBeAbleToAccessTheDashboard() {
         Assertions.assertFalse(dashboardActions.isDashboardHeaderDisplayed(), "User can still access dashboard");
+    }
+    
+    @Then("I should remain on the dashboard page")
+    public void iShouldRemainOnDashboardPage() {
+        Assertions.assertTrue(dashboardActions.isDashboardHeaderDisplayed(), "User is not on the dashboard page");
     }
 }

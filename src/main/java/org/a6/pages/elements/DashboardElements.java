@@ -59,6 +59,16 @@ public class DashboardElements extends BaseElements {
       @FindBy(how = How.XPATH, using = "//div[contains(@class, 'dropdown') or contains(@class, 'menu')]//button[contains(text(), 'Logout') or contains(text(), 'Keluar')]")
     public WebElement logoutMenuOption;
     
+    // Logout confirmation dialog elements
+    @FindBy(how = How.XPATH, using = "//div[@role='alertdialog']//h2[contains(text(), 'Apakah Anda yakin')]")
+    public WebElement logoutConfirmationDialog;
+    
+    @FindBy(how = How.XPATH, using = "//div[@role='alertdialog']//button[contains(text(), 'Ya')]")
+    public WebElement confirmLogoutButton;
+    
+    @FindBy(how = How.XPATH, using = "//div[@role='alertdialog']//button[contains(text(), 'Tidak')]")
+    public WebElement cancelLogoutButton;
+    
     public DashboardElements(WebDriver driver) {
         super(driver);
     }
