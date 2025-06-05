@@ -1,4 +1,4 @@
-name: Generate and Deploy Allure Report
+name: Maven Test & Deploy Allure Report
 
 on:
   push:
@@ -6,31 +6,32 @@ on:
       - main
 
 jobs:
-  allure:
+  test-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
-      - name: Set up Java (required for Allure CLI)
+      - name: Set up Java 11
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '11'
+
+      - name: Run tests with Maven
+        run: mvn clean test
 
       - name: Install Allure CLI
         run: |
           sudo apt-get update
           sudo apt-get install -y allure
 
-      - name: Run tests (adjust to your test command)
-        run: ./run-tests.sh
-
       - name: Generate Allure report
-        run: allure generate allure-results -o allure-report --clean
+        run: allure generate target/allure-results -o target/allure-report --clean
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+          publish_dir: ./target/allure-report
