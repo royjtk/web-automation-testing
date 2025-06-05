@@ -57,6 +57,16 @@ mvn verify
 Laporan HTML akan tersedia di:
 - `target/cucumber-reports/cucumber-pretty.html`
 
+## Melihat Laporan Pengujian dengan Allure
+
+Laporan pengujian akan dibuat setelah menjalankan tes. Untuk menghasilkan laporan lengkap, jalankan:
+
+```
+allure serve target/allure-results
+```
+
+Laporan HTML akan langsung terbentuk.
+
 ## Troubleshooting
 
 Jika terjadi error saat menjalankan test, coba solusi berikut:
