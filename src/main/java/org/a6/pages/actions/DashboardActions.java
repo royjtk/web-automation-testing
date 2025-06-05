@@ -107,8 +107,9 @@ public class DashboardActions {
             wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath(
                     "//div[@role='alertdialog'] | //div[contains(@class, 'modal')] | //div[contains(@class, 'dialog')]")));
-          } catch (Exception e) {
-            System.out.println("Warning: No confirmation dialog appeared after clicking logout: " + e.getMessage());
+          } catch (Exception dialogException) {
+            System.out.println(
+                "Warning: No confirmation dialog appeared after clicking logout: " + dialogException.getMessage());
           }
         } catch (Exception ex2) {
           System.out.println("Error: Failed to click logout button: " + ex2.getMessage());
