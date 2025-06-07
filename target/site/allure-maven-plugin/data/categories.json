@@ -1,0 +1,26 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "name" : "categories",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "Logout confirmation dialog is not displayed ==> expected: <true> but was: <false>",
+      "children" : [ {
+        "name" : "TC-LOGOUT-01 Successful logout with confirmation",
+        "uid" : "c7f03d3b169d0875",
+        "parentUid" : "8ba0846a7ff6bfc3931cbddb0232be24",
+        "status" : "failed",
+        "time" : {
+          "start" : 1749309649677,
+          "stop" : 1749309713562,
+          "duration" : 63885
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "8ba0846a7ff6bfc3931cbddb0232be24"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ]
+}

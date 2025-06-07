@@ -1,0 +1,4 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"","User Authentication","TC-1.1 Check login is successful with valid credentials as role ""bendahara""","0","0","1","0","0"
+"","User Logout","TC-LOGOUT-01 Successful logout with confirmation","1","0","0","0","0"
+"","User Authentication","TC-1.2 Check login is un-successful with invalid credentials. Its is username not registered","0","0","1","0","0"

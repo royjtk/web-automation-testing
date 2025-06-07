@@ -1,0 +1,52 @@
+{
+  "uid" : "ab17fc5a4eb3bca4b216b548c7f9fcbc",
+  "name" : "timeline",
+  "children" : [ {
+    "name" : "MuhammadAzhar9",
+    "children" : [ {
+      "name" : "14108@MuhammadAzhar9.main(1)",
+      "children" : [ {
+        "name" : "TC-1.1 Check login is successful with valid credentials as role \"bendahara\"",
+        "uid" : "2d294cc88864db86",
+        "parentUid" : "88e664f5e311a28231e4a7785bf0065d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1749309571312,
+          "stop" : 1749309645949,
+          "duration" : 74637
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "TC-LOGOUT-01 Successful logout with confirmation",
+        "uid" : "c7f03d3b169d0875",
+        "parentUid" : "88e664f5e311a28231e4a7785bf0065d",
+        "status" : "failed",
+        "time" : {
+          "start" : 1749309649677,
+          "stop" : 1749309713562,
+          "duration" : 63885
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "TC-1.2 Check login is un-successful with invalid credentials. Its is username not registered",
+        "uid" : "a577ed217609e6b3",
+        "parentUid" : "88e664f5e311a28231e4a7785bf0065d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1749309646168,
+          "stop" : 1749309649648,
+          "duration" : 3480
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "88e664f5e311a28231e4a7785bf0065d"
+    } ],
+    "uid" : "b904c3711ff0b5418271d83b203f0aff"
+  } ]
+}
